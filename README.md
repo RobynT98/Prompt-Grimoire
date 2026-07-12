@@ -1,26 +1,129 @@
+<div align="center">
+  <img src="icon.svg" alt="Prompt Grimoire" width="112" height="112">
+
 # Prompt Grimoire
 
-En installerbar och offline-fungerande PWA för prompts, rollspelsstarter, regler, karaktärer och flera versioner av samma karaktär.
+**Ett installerbart och offline-fungerande bibliotek för prompts, rollspel och karaktärer.**
+
+Skriv, organisera och återanvänd prompts, starters, regler och karaktärsversioner direkt i appen — utan att behöva redigera filer i GitHub.
+
+[Öppna appen](https://robynt98.github.io/Prompt-Grimoire/) · [Visa källkoden](https://github.com/RobynT98/Prompt-Grimoire)
+
+</div>
+
+---
+
+## Om appen
+
+Prompt Grimoire är en mobilvänlig PWA för att samla material till rollspel och AI-chattar. Allt innehåll skrivs direkt i appen och sparas lokalt på enheten.
+
+En karaktär kan ha flera separata versioner. **Tom Riddle** kan exempelvis finnas som barn, Hogwarts-elev, ung vuxen, vuxen eller i en alternativ tidslinje — utan att versionerna skriver över varandra.
 
 ## Funktioner
 
-- Markdown-redigering med skrivläge, delad vy och förhandsvisning
-- Prompts, starters, rollspelsregler och fria anteckningar
-- En grundkaraktär kan ha flera separata versioner, åldrar, tidslinjer och AU:n
-- Automatisk lokal lagring med IndexedDB
-- Sökning, taggar, favoriter, duplicering och kopiering
-- Import och export som JSON
-- Installerbar och tillgänglig offline
+- **Markdown-editor** med skrivläge, delad vy och förhandsvisning
+- **Prompts, starters, rollspelsregler, karaktärer och fria anteckningar**
+- **Flera versioner av samma karaktär**, med egen ålder, tidslinje och beskrivning
+- **Automatisk lokal lagring** med IndexedDB
+- **Sökning, taggar och favoriter**
+- **Duplicering** av poster och karaktärsversioner
+- **Kopiera text** med ett tryck
+- **Import och export** av hela biblioteket som JSON
+- **Offline-stöd** genom service worker
+- **Installerbar som app** på mobil, surfplatta och dator
+
+## Karaktärer och versioner
+
+Varje karaktärspost kan innehålla:
+
+| Fält | Exempel |
+|---|---|
+| Grundkaraktär | Tom Riddle |
+| Versionsnamn | Hogwarts, 16 år |
+| Ålder | 16 |
+| Tidslinje eller AU | 1940-tal / Modern AU |
+| Beskrivning | Personlighet, utseende, bakgrund, relationer och regler |
+
+Skapa flera poster med samma grundkaraktär men olika versionsnamn för att hålla varje rollspel tydligt åtskilt.
+
+## Markdown
+
+Editorn stöder bland annat:
+
+```markdown
+# Tom Riddle – Hogwarts, 16 år
+
+## Personlighet
+Tom är artig, kontrollerad och manipulativ.
+
+## Rollspelsregler
+- Han känner inte till framtida händelser.
+- Han styr aldrig spelarens karaktär.
+
+> Han talar lugnt även när han är arg.
+```
+
+## Lagring och integritet
+
+Dina prompts och anteckningar skickas inte automatiskt till GitHub. De sparas lokalt i webbläsarens **IndexedDB** på den enhet där appen används.
+
+Det betyder att:
+
+- appen fungerar utan konto och internetanslutning
+- innehållet inte automatiskt synkas mellan olika enheter
+- data kan försvinna om webbläsarens webbplatsdata rensas
+
+Använd därför knappen **Exportera** regelbundet och spara JSON-filen på en trygg plats. Säkerhetskopian kan senare återställas med **Importera**.
+
+## Installera appen
+
+### Android och dator
+
+1. Öppna appen i en kompatibel webbläsare.
+2. Tryck på **Installera** i appen eller webbläsarens installationsikon.
+3. Prompt Grimoire öppnas därefter som en fristående app.
+
+### iPhone och iPad
+
+1. Öppna appen i Safari.
+2. Tryck på **Dela**.
+3. Välj **Lägg till på hemskärmen**.
 
 ## Publicera med GitHub Pages
 
-1. Öppna **Settings → Pages** i repot.
-2. Under **Build and deployment**, välj **Deploy from a branch**.
-3. Välj `main` och `/ (root)` och tryck **Save**.
-4. När publiceringen är klar visas appens exakta adress i Pages-inställningarna. Den förväntade adressen är `https://robynt98.github.io/Prompt-Grimoire/`.
+1. Öppna repots **Settings**.
+2. Gå till **Pages**.
+3. Välj **Deploy from a branch** under *Build and deployment*.
+4. Välj branch `main` och mappen `/ (root)`.
+5. Tryck på **Save**.
 
-Repot är privat. Om GitHub inte erbjuder Pages för ett privat repo med ditt konto behöver repot göras offentligt eller publiceras via en annan tjänst.
+Den förväntade adressen är:
 
-## Lagring och säkerhetskopiering
+```text
+https://robynt98.github.io/Prompt-Grimoire/
+```
 
-Innehållet sparas lokalt i webbläsaren på enheten. Använd **Exportera** regelbundet för att skapa en JSON-säkerhetskopia, särskilt innan webbläsardata rensas eller enheten byts.
+> Repot är privat. GitHub Pages för privata repos beror på vilken GitHub-plan kontot använder. Om Pages inte kan aktiveras behöver repot göras offentligt eller publiceras via exempelvis Cloudflare Pages, Netlify eller Vercel.
+
+## Projektstruktur
+
+```text
+Prompt-Grimoire/
+├── index.html
+├── styles.css
+├── app.js
+├── manifest.webmanifest
+├── sw.js
+├── icon.svg
+└── README.md
+```
+
+## Teknik
+
+Projektet använder vanlig HTML, CSS och JavaScript utan ramverk eller byggsteg. Det gör appen lätt att publicera, förstå och underhålla.
+
+---
+
+<div align="center">
+  <sub>Byggd för prompts, världar, karaktärer och alla de där idéerna som annars försvinner in i anteckningsapp nummer sjutton.</sub>
+</div>
