@@ -15,22 +15,41 @@ Skriv, organisera och återanvänd prompts, starters, regler och karaktärsversi
 
 ## Om appen
 
-Prompt Grimoire är en mobilvänlig PWA för att samla material till rollspel och AI-chattar. Allt innehåll skrivs direkt i appen och sparas lokalt på enheten.
+Prompt Grimoire är en mobilvänlig PWA för material till rollspel och AI-chattar. Allt innehåll skrivs direkt i appen och sparas lokalt på enheten.
+
+Designen använder en mörk, sober palett med skiffer, djupgrönt och silver. Gränssnittet är byggt för att vara tydligt även när biblioteket växer från några få idéer till en mindre förbjuden avdelning.
 
 En karaktär kan ha flera separata versioner. **Tom Riddle** kan exempelvis finnas som barn, Hogwarts-elev, ung vuxen, vuxen eller i en alternativ tidslinje — utan att versionerna skriver över varandra.
 
 ## Funktioner
 
-- **Markdown-editor** med skrivläge, delad vy och förhandsvisning
+- **Markdown-editor** med skrivläge, delad vy och läsläge
 - **Prompts, starters, rollspelsregler, karaktärer och fria anteckningar**
 - **Flera versioner av samma karaktär**, med egen ålder, tidslinje och beskrivning
-- **Automatisk lokal lagring** med IndexedDB
-- **Sökning, taggar och favoriter**
+- **Samlingar / mappar** för exempelvis Hogwarts, Modern AU eller ett särskilt rollspel
+- **Grupperad karaktärsvy** där versioner samlas under grundkaraktären
+- **Sortering** efter senast ändrad, titel, skapad tid eller typ
+- **Sökning** i titel, innehåll, taggar, samlingar och karaktärsfält
+- **Taggar, favoriter och tydliga räknare**
+- **Snabbknappar** för nya prompts, karaktärer och regler
 - **Duplicering** av poster och karaktärsversioner
 - **Kopiera text** med ett tryck
-- **Import och export** av hela biblioteket som JSON
+- **Automatisk lokal lagring** med IndexedDB
+- **Import och säkerhetskopiering** av hela biblioteket som JSON
 - **Offline-stöd** genom service worker
 - **Installerbar som app** på mobil, surfplatta och dator
+
+## Organisera biblioteket
+
+Varje post kan placeras i en valfri **samling / mapp**. Några exempel:
+
+- Hogwarts
+- Grundregler
+- Modern AU
+- Mörka starters
+- Ett särskilt pågående rollspel
+
+Biblioteket kan sedan filtreras efter samling och sorteras på flera sätt. I vyn **Karaktärer** grupperas alla versioner automatiskt efter fältet *Grundkaraktär*.
 
 ## Karaktärer och versioner
 
@@ -39,9 +58,10 @@ Varje karaktärspost kan innehålla:
 | Fält | Exempel |
 |---|---|
 | Grundkaraktär | Tom Riddle |
-| Versionsnamn | Hogwarts, 16 år |
+| Version | Hogwarts, 16 år |
 | Ålder | 16 |
 | Tidslinje eller AU | 1940-tal / Modern AU |
+| Samling | Hogwarts |
 | Beskrivning | Personlighet, utseende, bakgrund, relationer och regler |
 
 Skapa flera poster med samma grundkaraktär men olika versionsnamn för att hålla varje rollspel tydligt åtskilt.
@@ -73,7 +93,7 @@ Det betyder att:
 - innehållet inte automatiskt synkas mellan olika enheter
 - data kan försvinna om webbläsarens webbplatsdata rensas
 
-Använd därför knappen **Exportera** regelbundet och spara JSON-filen på en trygg plats. Säkerhetskopian kan senare återställas med **Importera**.
+Använd därför knappen **Säkerhetskopiera** regelbundet och spara JSON-filen på en trygg plats. Säkerhetskopian kan senare återställas med **Importera**.
 
 ## Installera appen
 
