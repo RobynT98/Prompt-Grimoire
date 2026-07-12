@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#211735">
+  <meta name="description" content="Offline-PWA för prompts, starters, regler och karaktärsversioner.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>Prompt Grimoire</title>
+</head>
+<body>
+  <header class="topbar">
+    <div><h1>Prompt Grimoire</h1><p>Ditt lokala bibliotek för rollspel och prompts</p></div>
+    <div class="top-actions"><span id="saveStatus">Sparad</span><button id="installBtn" hidden>Installera</button><button id="exportBtn">Exportera</button><label class="button">Importera<input id="importInput" type="file" accept="application/json" hidden></label></div>
+  </header>
+  <main class="layout">
+    <aside class="sidebar">
+      <button id="newBtn" class="primary">+ Ny post</button>
+      <input id="searchInput" type="search" placeholder="Sök i grimoaren…">
+      <nav id="filters">
+        <button class="filter active" data-filter="all">Alla</button>
+        <button class="filter" data-filter="prompt">Prompts</button>
+        <button class="filter" data-filter="starter">Starters</button>
+        <button class="filter" data-filter="rule">Regler</button>
+        <button class="filter" data-filter="character">Karaktärer</button>
+        <button class="filter" data-filter="note">Anteckningar</button>
+        <button class="filter" data-filter="favorite">★ Favoriter</button>
+      </nav>
+      <div id="itemList" class="item-list"></div>
+    </aside>
+    <section class="workspace">
+      <div id="emptyState" class="empty"><h2>Öppna grimoaren</h2><p>Skapa en post eller välj något i listan.</p></div>
+      <form id="editor" hidden>
+        <div class="editor-head">
+          <input id="title" class="title" placeholder="Titel">
+          <button type="button" id="favoriteBtn" class="icon-btn" title="Favorit">☆</button>
+          <button type="button" id="copyBtn">Kopiera</button>
+          <button type="button" id="duplicateBtn">Duplicera</button>
+          <button type="button" id="deleteBtn" class="danger">Radera</button>
+        </div>
+        <div class="fields">
+          <label>Typ<select id="type"><option value="prompt">Prompt</option><option value="starter">Starter</option><option value="rule">Rollspelsregel</option><option value="character">Karaktär</option><option value="note">Anteckning</option></select></label>
+          <label>Taggar<input id="tags" placeholder="mörk, hogwarts, dialog"></label>
+        </div>
+        <section id="characterFields" class="character-fields" hidden>
+          <h3>Karaktär och version</h3>
+          <div class="fields">
+            <label>Grundkaraktär<input id="characterName" placeholder="Tom Riddle"></label>
+            <label>Versionsnamn<input id="variantName" placeholder="Hogwarts, 16 år"></label>
+            <label>Ålder<input id="age" placeholder="16"></label>
+            <label>Tidslinje / AU<input id="timeline" placeholder="1940-tal / Modern AU"></label>
+          </div>
+          <p class="hint">Samma grundkaraktär kan ha hur många separata versioner som helst.</p>
+        </section>
+        <div class="toolbar" aria-label="Markdownverktyg">
+          <button type="button" data-md="**|**"><b>B</b></button><button type="button" data-md="*|*"><i>I</i></button><button type="button" data-md="# |">H1</button><button type="button" data-md="## |">H2</button><button type="button" data-md="- |">Lista</button><button type="button" data-md="> |">Citat</button><button type="button" data-md="`|`">Kod</button>
+          <button type="button" id="modeEdit" class="active">Skriv</button><button type="button" id="modeSplit">Delad</button><button type="button" id="modePreview">Förhandsvisa</button>
+        </div>
+        <div id="editorPane" class="editor-pane">
+          <textarea id="content" spellcheck="true" placeholder="# Skriv med Markdown…"></textarea>
+          <article id="preview" class="preview"></article>
+        </div>
+      </form>
+    </section>
+  </main>
+  <dialog id="newDialog"><form method="dialog"><h2>Ny post</h2><label>Typ<select id="newType"><option value="prompt">Prompt</option><option value="starter">Starter</option><option value="rule">Rollspelsregel</option><option value="character">Karaktär</option><option value="note">Anteckning</option></select></label><label>Titel<input id="newTitle" required autofocus></label><div class="dialog-actions"><button value="cancel">Avbryt</button><button id="createBtn" value="default" class="primary">Skapa</button></div></form></dialog>
+  <script src="app.js"></script>
+</body>
+</html>
