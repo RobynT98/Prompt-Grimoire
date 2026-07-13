@@ -1,9 +1,10 @@
-const CACHE = 'prompt-grimoire-v3';
+const CACHE = 'prompt-grimoire-v4';
 const ASSETS = [
   './',
   './index.html',
-  './styles.css',
-  './app.js',
+  './styles.css?v=4',
+  './theme.js?v=4',
+  './app.js?v=4',
   './manifest.webmanifest',
   './icon.svg'
 ];
@@ -26,13 +27,27 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        const copy = response.clone();
-        caches.open(CACHE).then((cache) => cache.put(event.request, copy));
-        return response;
-      })
-      .catch(() => caches.match(event.request).then((cached) => cached || caches.match('./index.html')))
-  );
+
+  event.respondWith((async () => {
+    try {
+      const response = await fetch(event.request, { cache: 'no-store' });
+      const type = response.headers.get('content-type') || '';
+      const mayCache = response.ok && (
+        event.request.mode !== 'navigate' || type.includes('text/html')
+      );
+
+      if (mayCache) {
+        const cache = await caches.open(CACHE);
+        await cache.put(event.request, response.clone());
+      }
+      return response;
+    } catch {
+      const cached = await caches.match(event.request);
+      if (cached) return cached;
+      if (event.request.mode === 'navigate') {
+        return caches.match('./index.html');
+      }
+      return new Response('', { status: 503, statusText: 'Offline' });
+    }
+  })());
 });
