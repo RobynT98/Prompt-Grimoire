@@ -5,15 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#07130f">
   <meta name="description" content="Offline-PWA för prompts, starters, regler och karaktärsversioner.">
-  <script>
-    try {
-      const savedTheme = localStorage.getItem('prompt-grimoire-theme');
-      if (savedTheme && savedTheme !== 'system') document.documentElement.dataset.theme = savedTheme;
-    } catch {}
-  </script>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=4">
   <title>Prompt Grimoire</title>
 </head>
 <body>
@@ -213,34 +207,7 @@
     </form>
   </dialog>
 
-  <script src="app.js"></script>
-  <script>
-    (() => {
-      const storageKey = 'prompt-grimoire-theme';
-      const select = document.getElementById('themeSelect');
-      const themeMeta = document.querySelector('meta[name="theme-color"]');
-      const media = window.matchMedia('(prefers-color-scheme: dark)');
-
-      function resolvedTheme(value) {
-        return value === 'system' ? (media.matches ? 'dark' : 'light') : value;
-      }
-
-      function applyTheme(value, save = true) {
-        if (value === 'system') document.documentElement.removeAttribute('data-theme');
-        else document.documentElement.dataset.theme = value;
-        if (select) select.value = value;
-        if (themeMeta) themeMeta.content = resolvedTheme(value) === 'dark' ? '#07130f' : '#eef3ef';
-        if (save) localStorage.setItem(storageKey, value);
-      }
-
-      let saved = 'system';
-      try { saved = localStorage.getItem(storageKey) || 'system'; } catch {}
-      applyTheme(saved, false);
-      select?.addEventListener('change', () => applyTheme(select.value));
-      media.addEventListener?.('change', () => {
-        if ((localStorage.getItem(storageKey) || 'system') === 'system') applyTheme('system', false);
-      });
-    })();
-  </script>
+  <script src="theme.js?v=4"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>
