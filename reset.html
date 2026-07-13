@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07130f">
+  <title>Återställer Prompt Grimoire</title>
+  <style>
+    :root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:1.5rem;background:#06100c;color:#eef5f1;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}.card{max-width:440px;text-align:center;padding:2rem;border-radius:1.5rem;background:#0d1913;border:1px solid rgba(157,190,172,.2)}h1{font-family:Georgia,serif;margin-top:0}.dot{width:1rem;height:1rem;margin:1.25rem auto;border-radius:50%;background:#58ca91;box-shadow:0 0 0 .55rem rgba(47,159,107,.15);animation:pulse 1s infinite alternate}p{color:#a7b8af;line-height:1.55}@keyframes pulse{to{transform:scale(1.25)}}a{color:#8ce0b5}</style>
+</head>
+<body>
+  <main class="card">
+    <div class="dot"></div>
+    <h1>Återställer grimoaren</h1>
+    <p id="status">Den gamla appcachen tas bort. Dina lokalt sparade poster lämnas orörda.</p>
+    <p><a href="./?recovered=1">Öppna appen manuellt</a></p>
+  </main>
+  <script>
+    (async () => {
+      try {
+        if ('serviceWorker' in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(registrations.map((registration) => registration.unregister()));
+        }
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.filter((key) => key.startsWith('prompt-grimoire-')).map((key) => caches.delete(key)));
+        }
+        document.getElementById('status').textContent = 'Klart. Appen öppnas med en ren cache…';
+        setTimeout(() => location.replace('./?recovered=' + Date.now()), 700);
+      } catch (error) {
+        document.getElementById('status').textContent = 'Återställningen kunde inte slutföras automatiskt. Tryck på länken nedan.';
+      }
+    })();
+  </script>
+</body>
+</html>
