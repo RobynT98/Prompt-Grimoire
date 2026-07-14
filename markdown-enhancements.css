@@ -1,0 +1,116 @@
+.preview strong,
+.preview b{
+  font-weight:900;
+  color:#0a432b;
+  letter-spacing:.005em;
+  background:linear-gradient(transparent 58%,rgba(47,159,107,.20) 58%);
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone;
+}
+
+.preview em,
+.preview i{
+  font-style:italic;
+  color:#40584b;
+}
+
+.table-scroll{
+  width:100%;
+  margin:1rem 0;
+  overflow-x:auto;
+  border:1px solid rgba(38,101,67,.20);
+  border-radius:1rem;
+  background:#ffffff;
+  box-shadow:0 8px 24px rgba(26,71,47,.08);
+  -webkit-overflow-scrolling:touch;
+}
+
+.table-scroll:focus-visible{
+  outline:3px solid rgba(47,159,107,.30);
+  outline-offset:2px;
+}
+
+.preview table{
+  width:100%;
+  min-width:760px;
+  border-collapse:separate;
+  border-spacing:0;
+  font-size:.92rem;
+  line-height:1.45;
+}
+
+.preview th,
+.preview td{
+  padding:.78rem .85rem;
+  text-align:left;
+  vertical-align:top;
+  border-right:1px solid rgba(38,101,67,.13);
+  border-bottom:1px solid rgba(38,101,67,.13);
+}
+
+.preview th:last-child,
+.preview td:last-child{
+  border-right:0;
+}
+
+.preview tbody tr:last-child td{
+  border-bottom:0;
+}
+
+.preview th{
+  position:sticky;
+  top:0;
+  z-index:1;
+  background:#e4f0e8;
+  color:#123d29;
+  font-weight:900;
+  letter-spacing:.015em;
+}
+
+.preview tbody tr:nth-child(even) td{
+  background:#f5f9f6;
+}
+
+.preview tbody tr:hover td{
+  background:#edf6f0;
+}
+
+.preview th:first-child,
+.preview td:first-child{
+  min-width:145px;
+}
+
+.preview td:first-child strong,
+.preview td:first-child b{
+  white-space:nowrap;
+}
+
+.preview hr{
+  border:0;
+  height:1px;
+  background:rgba(38,101,67,.20);
+  margin:1.5rem 0;
+}
+
+@media(max-width:760px){
+  .preview table{
+    min-width:690px;
+    font-size:.88rem;
+  }
+
+  .preview th,
+  .preview td{
+    padding:.68rem .72rem;
+  }
+
+  .table-scroll::after{
+    content:"Dra åt sidan för fler kolumner";
+    display:block;
+    position:sticky;
+    left:0;
+    width:max-content;
+    padding:.35rem .65rem .5rem;
+    color:#60766a;
+    font-size:.72rem;
+  }
+}
