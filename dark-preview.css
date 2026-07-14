@@ -9,36 +9,48 @@
   --preview-table:#0d1c15;
   --preview-table-alt:#11231a;
   --preview-table-head:#183326;
+  --preview-system-bg:#06150e;
+  --preview-system-text:#e3f7eb;
+  --preview-system-badge:rgba(72,183,125,.17);
+  --preview-system-badge-text:#8ce0b5;
   --preview-shadow:0 16px 40px rgba(0,0,0,.28);
 }
 
 :root[data-theme="light"]{
-  --preview-bg:#ffffff;
-  --preview-text:#17251d;
-  --preview-heading:#15593a;
-  --preview-subtle:#52695d;
-  --preview-line:rgba(38,101,67,.20);
-  --preview-line-strong:rgba(38,101,67,.48);
-  --preview-highlight:rgba(47,159,107,.20);
-  --preview-table:#ffffff;
-  --preview-table-alt:#f5f9f6;
-  --preview-table-head:#e4f0e8;
-  --preview-shadow:0 12px 30px rgba(31,62,45,.10);
+  --preview-bg:#fbfcf9;
+  --preview-text:#24362c;
+  --preview-heading:#184e36;
+  --preview-subtle:#5d7065;
+  --preview-line:rgba(45,91,67,.18);
+  --preview-line-strong:rgba(38,101,67,.40);
+  --preview-highlight:rgba(47,159,107,.11);
+  --preview-table:#fbfcf9;
+  --preview-table-alt:#f2f6f2;
+  --preview-table-head:#dfece3;
+  --preview-system-bg:#174f36;
+  --preview-system-text:#f3faf6;
+  --preview-system-badge:rgba(255,255,255,.13);
+  --preview-system-badge-text:#d7f2e2;
+  --preview-shadow:0 12px 28px rgba(31,62,45,.09);
 }
 
 @media(prefers-color-scheme:light){
   :root:not([data-theme]){
-    --preview-bg:#ffffff;
-    --preview-text:#17251d;
-    --preview-heading:#15593a;
-    --preview-subtle:#52695d;
-    --preview-line:rgba(38,101,67,.20);
-    --preview-line-strong:rgba(38,101,67,.48);
-    --preview-highlight:rgba(47,159,107,.20);
-    --preview-table:#ffffff;
-    --preview-table-alt:#f5f9f6;
-    --preview-table-head:#e4f0e8;
-    --preview-shadow:0 12px 30px rgba(31,62,45,.10);
+    --preview-bg:#fbfcf9;
+    --preview-text:#24362c;
+    --preview-heading:#184e36;
+    --preview-subtle:#5d7065;
+    --preview-line:rgba(45,91,67,.18);
+    --preview-line-strong:rgba(38,101,67,.40);
+    --preview-highlight:rgba(47,159,107,.11);
+    --preview-table:#fbfcf9;
+    --preview-table-alt:#f2f6f2;
+    --preview-table-head:#dfece3;
+    --preview-system-bg:#174f36;
+    --preview-system-text:#f3faf6;
+    --preview-system-badge:rgba(255,255,255,.13);
+    --preview-system-badge-text:#d7f2e2;
+    --preview-shadow:0 12px 28px rgba(31,62,45,.09);
   }
 }
 
@@ -53,23 +65,58 @@
 .preview h2,
 .preview h3{
   color:var(--preview-heading);
+  line-height:1.18;
 }
+
+.preview h1{font-size:clamp(1.9rem,6vw,2.4rem)}
+.preview h2{font-size:clamp(1.45rem,5vw,1.85rem);margin-top:1.55rem}
+.preview h3{font-size:clamp(1.18rem,4vw,1.4rem);margin-top:1.25rem}
 
 .preview p,
 .preview li{
   color:var(--preview-text);
 }
 
+.preview p{
+  line-height:1.58;
+}
+
 .preview strong,
 .preview b{
   color:var(--preview-heading);
-  background:linear-gradient(transparent 58%,var(--preview-highlight) 58%);
+  background:linear-gradient(transparent 72%,var(--preview-highlight) 72%);
 }
 
 .preview em,
 .preview i{
   color:var(--preview-subtle);
 }
+
+.preview ol,
+.preview ul{
+  margin:.72rem 0 1rem;
+  padding-left:1.55rem;
+}
+
+.preview li{
+  margin:.24rem 0;
+  padding-left:.12rem;
+  line-height:1.48;
+}
+
+.preview li::marker{
+  color:var(--preview-heading);
+  font-weight:800;
+}
+
+.preview li > ul,
+.preview li > ol{
+  margin:.42rem 0 .28rem;
+  padding-left:1.25rem;
+}
+
+.preview ul ul{list-style-type:circle}
+.preview ul ul ul{list-style-type:square}
 
 .preview blockquote{
   color:var(--preview-subtle);
@@ -90,10 +137,15 @@
 }
 
 .code-label{
-  background:#06150e;
-  color:#e3f7eb;
+  background:var(--preview-system-bg);
+  color:var(--preview-system-text);
   border-left-color:var(--accent-strong);
-  box-shadow:0 10px 26px rgba(0,0,0,.22);
+  box-shadow:0 10px 24px rgba(0,0,0,.16);
+}
+
+.code-label::before{
+  background:var(--preview-system-badge);
+  color:var(--preview-system-badge-text);
 }
 
 .table-scroll{
@@ -119,7 +171,7 @@
 }
 
 .preview tbody tr:hover td{
-  background:color-mix(in srgb,var(--preview-table-alt) 78%,var(--accent) 22%);
+  background:color-mix(in srgb,var(--preview-table-alt) 82%,var(--accent) 18%);
 }
 
 .preview hr{
@@ -133,4 +185,20 @@
 
 .table-scroll::after{
   color:var(--preview-subtle);
+}
+
+@media(max-width:760px){
+  .preview{
+    padding:1.05rem 1rem;
+  }
+
+  .preview ol,
+  .preview ul{
+    padding-left:1.35rem;
+  }
+
+  .preview li > ul,
+  .preview li > ol{
+    padding-left:1.05rem;
+  }
 }
