@@ -62,15 +62,29 @@
   if (!document.querySelector('link[data-view-mode-style]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'view-mode.css?v=9';
+    link.href = 'view-mode.css?v=13';
     link.dataset.viewModeStyle = 'true';
     document.head.appendChild(link);
   }
 
   if (!document.querySelector('script[data-view-mode-script]')) {
     const script = document.createElement('script');
-    script.src = 'view-mode.js?v=9';
+    script.src = 'view-mode.js?v=13';
     script.dataset.viewModeScript = 'true';
     document.head.appendChild(script);
   }
 })();
+
+window.addEventListener('load', () => {
+  const baseMarkdown = window.markdown;
+  if (typeof baseMarkdown !== 'function') return;
+
+  window.markdown = function renderMarkdownWithIndentedQuotes(markdownText = '') {
+    const normalized = String(markdownText).replace(/^[\t ]+>\s?/gm, '> ');
+    return baseMarkdown(normalized);
+  };
+
+  const textarea = document.getElementById('content');
+  const preview = document.getElementById('preview');
+  if (textarea && preview) preview.innerHTML = window.markdown(textarea.value);
+}, { once: true });
