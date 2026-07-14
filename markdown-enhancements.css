@@ -14,6 +14,56 @@
   color:#40584b;
 }
 
+.code-label{
+  display:flex;
+  align-items:center;
+  width:100%;
+  margin:1rem 0;
+  padding:.72rem .9rem;
+  border-left:4px solid #48b77d;
+  border-radius:.75rem;
+  background:#0a1b13;
+  color:#dff7e9;
+  box-shadow:0 8px 22px rgba(10,55,34,.13);
+}
+
+.code-label::before{
+  content:"SYSTEM";
+  flex:0 0 auto;
+  margin-right:.7rem;
+  padding:.15rem .42rem;
+  border-radius:999px;
+  background:rgba(72,183,125,.17);
+  color:#8ce0b5;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:.62rem;
+  font-weight:900;
+  letter-spacing:.09em;
+}
+
+.code-label code{
+  min-width:0;
+  overflow-wrap:anywhere;
+  white-space:normal;
+  color:inherit;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-weight:800;
+  letter-spacing:.02em;
+}
+
+.preview pre{
+  max-width:100%;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+  overflow-x:hidden;
+}
+
+.preview pre code{
+  white-space:inherit;
+  overflow-wrap:inherit;
+}
+
 .table-scroll{
   width:100%;
   margin:1rem 0;
@@ -126,5 +176,14 @@
     padding:.35rem .65rem .5rem;
     color:#60766a;
     font-size:.72rem;
+  }
+
+  .code-label{
+    align-items:flex-start;
+    padding:.68rem .75rem;
+  }
+
+  .code-label::before{
+    margin-right:.55rem;
   }
 }
