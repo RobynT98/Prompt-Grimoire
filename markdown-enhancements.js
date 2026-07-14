@@ -121,7 +121,7 @@
         continue;
       }
 
-      if (/^---+$/.test(line.trim())) {
+      if (/^(?:---+|___+|\*\*\*+)$/.test(line.trim())) {
         flushParagraph();
         blocks.push('<hr>');
         index += 1;
@@ -141,4 +141,28 @@
     flushParagraph();
     return blocks.join('');
   };
+
+  const separatorButton = document.getElementById('separatorBtn');
+  if (separatorButton) {
+    separatorButton.addEventListener('click', () => {
+      const textarea = document.getElementById('content');
+      if (!textarea) return;
+
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const beforeText = textarea.value.slice(0, start);
+      const afterText = textarea.value.slice(end);
+      const prefix = beforeText && !beforeText.endsWith('\n\n')
+        ? (beforeText.endsWith('\n') ? '\n' : '\n\n')
+        : '';
+      const suffix = afterText && !afterText.startsWith('\n\n')
+        ? (afterText.startsWith('\n') ? '\n' : '\n\n')
+        : '';
+      const insertion = `${prefix}---${suffix}`;
+
+      textarea.setRangeText(insertion, start, end, 'end');
+      textarea.focus();
+      textarea.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+  }
 })();
