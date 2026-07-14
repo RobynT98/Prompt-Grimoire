@@ -1,12 +1,12 @@
-const CACHE = 'prompt-grimoire-v7';
+const CACHE = 'prompt-grimoire-v8';
 const ASSETS = [
   './',
   './index.html',
-  './styles.css?v=7',
-  './markdown-enhancements.css?v=7',
-  './theme.js?v=7',
-  './app.js?v=7',
-  './markdown-enhancements.js?v=7',
+  './styles.css?v=8',
+  './markdown-enhancements.css?v=8',
+  './theme.js?v=8',
+  './app.js?v=8',
+  './markdown-enhancements.js?v=8',
   './manifest.webmanifest',
   './icon.svg'
 ];
