@@ -52,18 +52,27 @@
 
     while (index < lines.length) {
       const line = lines[index];
+      const trimmed = line.trim();
       const next = lines[index + 1] || '';
 
-      if (/^```/.test(line.trim())) {
+      const compactFence = trimmed.match(/^```\s*(.*?)\s*```$/);
+      if (compactFence && compactFence[1]) {
+        flushParagraph();
+        blocks.push(`<div class="code-label"><code>${escape(compactFence[1])}</code></div>`);
+        index += 1;
+        continue;
+      }
+
+      if (/^```(?:[a-zA-Z0-9_-]+)?\s*$/.test(trimmed)) {
         flushParagraph();
         const codeLines = [];
         index += 1;
-        while (index < lines.length && !/^```/.test(lines[index].trim())) {
+        while (index < lines.length && !/^```\s*$/.test(lines[index].trim())) {
           codeLines.push(lines[index]);
           index += 1;
         }
         blocks.push(`<pre><code>${escape(codeLines.join('\n'))}</code></pre>`);
-        index += 1;
+        if (index < lines.length) index += 1;
         continue;
       }
 
@@ -121,14 +130,14 @@
         continue;
       }
 
-      if (/^(?:---+|___+|\*\*\*+)$/.test(line.trim())) {
+      if (/^(?:---+|___+|\*\*\*+)$/.test(trimmed)) {
         flushParagraph();
         blocks.push('<hr>');
         index += 1;
         continue;
       }
 
-      if (!line.trim()) {
+      if (!trimmed) {
         flushParagraph();
         index += 1;
         continue;
@@ -142,26 +151,49 @@
     return blocks.join('');
   };
 
+  function surroundingSpacing(textBefore, textAfter) {
+    const prefix = textBefore && !textBefore.endsWith('\n\n')
+      ? (textBefore.endsWith('\n') ? '\n' : '\n\n')
+      : '';
+    const suffix = textAfter && !textAfter.startsWith('\n\n')
+      ? (textAfter.startsWith('\n') ? '\n' : '\n\n')
+      : '';
+    return { prefix, suffix };
+  }
+
   const separatorButton = document.getElementById('separatorBtn');
   if (separatorButton) {
     separatorButton.addEventListener('click', () => {
       const textarea = document.getElementById('content');
       if (!textarea) return;
-
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
       const beforeText = textarea.value.slice(0, start);
       const afterText = textarea.value.slice(end);
-      const prefix = beforeText && !beforeText.endsWith('\n\n')
-        ? (beforeText.endsWith('\n') ? '\n' : '\n\n')
-        : '';
-      const suffix = afterText && !afterText.startsWith('\n\n')
-        ? (afterText.startsWith('\n') ? '\n' : '\n\n')
-        : '';
-      const insertion = `${prefix}---${suffix}`;
+      const { prefix, suffix } = surroundingSpacing(beforeText, afterText);
+      textarea.setRangeText(`${prefix}---${suffix}`, start, end, 'end');
+      textarea.focus();
+      textarea.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+  }
 
+  const codeLabelButton = document.getElementById('codeLabelBtn');
+  if (codeLabelButton) {
+    codeLabelButton.addEventListener('click', () => {
+      const textarea = document.getElementById('content');
+      if (!textarea) return;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const selected = textarea.value.slice(start, end).replace(/\s*\n\s*/g, ' ').trim();
+      const beforeText = textarea.value.slice(0, start);
+      const afterText = textarea.value.slice(end);
+      const { prefix, suffix } = surroundingSpacing(beforeText, afterText);
+      const content = selected || 'SYSTEM-MOTOR: ROLLSPELSREGLER';
+      const insertion = `${prefix}\`\`\`${content}\`\`\`${suffix}`;
+      const contentStart = start + prefix.length + 3;
       textarea.setRangeText(insertion, start, end, 'end');
       textarea.focus();
+      textarea.setSelectionRange(contentStart, contentStart + content.length);
       textarea.dispatchEvent(new Event('input', { bubbles: true }));
     });
   }
@@ -171,26 +203,18 @@
     codeBlockButton.addEventListener('click', () => {
       const textarea = document.getElementById('content');
       if (!textarea) return;
-
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
       const selected = textarea.value.slice(start, end);
       const beforeText = textarea.value.slice(0, start);
       const afterText = textarea.value.slice(end);
-      const prefix = beforeText && !beforeText.endsWith('\n\n')
-        ? (beforeText.endsWith('\n') ? '\n' : '\n\n')
-        : '';
-      const suffix = afterText && !afterText.startsWith('\n\n')
-        ? (afterText.startsWith('\n') ? '\n' : '\n\n')
-        : '';
-      const content = selected || 'SYSTEM-MOTOR: ';
+      const { prefix, suffix } = surroundingSpacing(beforeText, afterText);
+      const content = selected || 'Skriv flera rader här';
       const insertion = `${prefix}\`\`\`\n${content}\n\`\`\`${suffix}`;
       const contentStart = start + prefix.length + 4;
-      const contentEnd = contentStart + content.length;
-
       textarea.setRangeText(insertion, start, end, 'end');
       textarea.focus();
-      textarea.setSelectionRange(contentStart, contentEnd);
+      textarea.setSelectionRange(contentStart, contentStart + content.length);
       textarea.dispatchEvent(new Event('input', { bubbles: true }));
     });
   }
