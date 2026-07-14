@@ -88,8 +88,22 @@
 .preview hr{
   border:0;
   height:1px;
-  background:rgba(38,101,67,.20);
-  margin:1.5rem 0;
+  margin:1.75rem 0;
+  background:linear-gradient(90deg,transparent,rgba(38,101,67,.48) 18%,rgba(38,101,67,.48) 82%,transparent);
+  overflow:visible;
+}
+
+.preview hr::after{
+  content:"◆";
+  display:block;
+  position:relative;
+  top:-.72rem;
+  width:max-content;
+  margin:auto;
+  padding:0 .55rem;
+  background:var(--preview-bg,#fff);
+  color:rgba(38,101,67,.72);
+  font-size:.72rem;
 }
 
 @media(max-width:760px){
