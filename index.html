@@ -7,8 +7,8 @@
   <meta name="description" content="Offline-PWA för prompts, starters, regler och karaktärsversioner.">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=6">
-  <link rel="stylesheet" href="markdown-enhancements.css?v=6">
+  <link rel="stylesheet" href="styles.css?v=7">
+  <link rel="stylesheet" href="markdown-enhancements.css?v=7">
   <title>Prompt Grimoire</title>
 </head>
 <body>
@@ -163,7 +163,8 @@
             <button type="button" data-md="## |" title="Rubrik 2">H2</button>
             <button type="button" data-md="- |" title="Punktlista">Lista</button>
             <button type="button" data-md="> |" title="Citat">Citat</button>
-            <button type="button" data-md="`|`" title="Kod">Kod</button>
+            <button type="button" data-md="`|`" title="Inline-kod">Kod</button>
+            <button type="button" id="codeBlockBtn" title="Infoga inhägnat kodblock" aria-label="Infoga kodblock">Kodblock</button>
             <button type="button" id="separatorBtn" title="Infoga avdelningslinje" aria-label="Infoga avdelningslinje">Linje</button>
           </div>
           <div class="view-tools">
@@ -209,8 +210,8 @@
     </form>
   </dialog>
 
-  <script src="theme.js?v=6"></script>
-  <script src="app.js?v=6"></script>
-  <script src="markdown-enhancements.js?v=6"></script>
+  <script src="theme.js?v=7"></script>
+  <script src="app.js?v=7"></script>
+  <script src="markdown-enhancements.js?v=7"></script>
 </body>
 </html>
