@@ -38,6 +38,82 @@
     </div>`;
   };
 
+  const matchListItem = (line = '') => {
+    const match = line.match(/^(\s*)([-*]|\d+\.)\s+(.+)$/);
+    if (!match) return null;
+    const whitespace = match[1].replace(/\t/g, '    ');
+    return {
+      indent: whitespace.length,
+      ordered: /\d+\./.test(match[2]),
+      text: match[3]
+    };
+  };
+
+  const renderList = (lines, startIndex, forcedIndent) => {
+    const first = matchListItem(lines[startIndex]);
+    if (!first) return null;
+
+    const baseIndent = forcedIndent ?? first.indent;
+    const ordered = first.ordered;
+    const tag = ordered ? 'ol' : 'ul';
+    const items = [];
+    let index = startIndex;
+
+    while (index < lines.length) {
+      const current = matchListItem(lines[index]);
+      if (!current || current.indent !== baseIndent || current.ordered !== ordered) break;
+
+      let itemContent = inline(current.text);
+      index += 1;
+
+      while (index < lines.length) {
+        const nextLine = lines[index];
+        const nextItem = matchListItem(nextLine);
+
+        if (!nextLine.trim()) {
+          const afterBlank = matchListItem(lines[index + 1] || '');
+          if (afterBlank && afterBlank.indent > baseIndent) {
+            index += 1;
+            const nested = renderList(lines, index, afterBlank.indent);
+            if (nested) {
+              itemContent += nested.html;
+              index = nested.nextIndex;
+              continue;
+            }
+          }
+          break;
+        }
+
+        if (nextItem && nextItem.indent > baseIndent) {
+          const nested = renderList(lines, index, nextItem.indent);
+          if (nested) {
+            itemContent += nested.html;
+            index = nested.nextIndex;
+            continue;
+          }
+        }
+
+        if (nextItem && nextItem.indent <= baseIndent) break;
+
+        const continuationIndent = (nextLine.match(/^(\s*)/)?.[1] || '').replace(/\t/g, '    ').length;
+        if (continuationIndent > baseIndent) {
+          itemContent += `<br>${inline(nextLine.trim())}`;
+          index += 1;
+          continue;
+        }
+
+        break;
+      }
+
+      items.push(`<li>${itemContent}</li>`);
+    }
+
+    return {
+      html: `<${tag}>${items.join('')}</${tag}>`,
+      nextIndex: index
+    };
+  };
+
   window.markdown = function renderMarkdown(markdownText = '') {
     const lines = String(markdownText).replace(/\r\n?/g, '\n').split('\n');
     const blocks = [];
@@ -108,26 +184,15 @@
         continue;
       }
 
-      if (/^[-*]\s+/.test(line)) {
+      const listStart = matchListItem(line);
+      if (listStart) {
         flushParagraph();
-        const listItems = [];
-        while (index < lines.length && /^[-*]\s+/.test(lines[index])) {
-          listItems.push(lines[index].replace(/^[-*]\s+/, ''));
-          index += 1;
+        const renderedList = renderList(lines, index, listStart.indent);
+        if (renderedList) {
+          blocks.push(renderedList.html);
+          index = renderedList.nextIndex;
+          continue;
         }
-        blocks.push(`<ul>${listItems.map((item) => `<li>${inline(item)}</li>`).join('')}</ul>`);
-        continue;
-      }
-
-      if (/^\d+\.\s+/.test(line)) {
-        flushParagraph();
-        const listItems = [];
-        while (index < lines.length && /^\d+\.\s+/.test(lines[index])) {
-          listItems.push(lines[index].replace(/^\d+\.\s+/, ''));
-          index += 1;
-        }
-        blocks.push(`<ol>${listItems.map((item) => `<li>${inline(item)}</li>`).join('')}</ol>`);
-        continue;
       }
 
       if (/^(?:---+|___+|\*\*\*+)$/.test(trimmed)) {
