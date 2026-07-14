@@ -1,4 +1,4 @@
-const CACHE = 'prompt-grimoire-v8';
+const CACHE = 'prompt-grimoire-v9';
 const ASSETS = [
   './',
   './index.html',
@@ -7,6 +7,8 @@ const ASSETS = [
   './theme.js?v=8',
   './app.js?v=8',
   './markdown-enhancements.js?v=8',
+  './view-mode.css?v=9',
+  './view-mode.js?v=9',
   './manifest.webmanifest',
   './icon.svg'
 ];
