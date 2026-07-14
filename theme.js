@@ -57,3 +57,20 @@
     else if (typeof media.addListener === 'function') media.addListener(handleSystemThemeChange);
   }
 })();
+
+(() => {
+  if (!document.querySelector('link[data-view-mode-style]')) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'view-mode.css?v=9';
+    link.dataset.viewModeStyle = 'true';
+    document.head.appendChild(link);
+  }
+
+  if (!document.querySelector('script[data-view-mode-script]')) {
+    const script = document.createElement('script');
+    script.src = 'view-mode.js?v=9';
+    script.dataset.viewModeScript = 'true';
+    document.head.appendChild(script);
+  }
+})();
