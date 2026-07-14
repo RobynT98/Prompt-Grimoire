@@ -1,4 +1,4 @@
-const CACHE = 'prompt-grimoire-v11';
+const CACHE = 'prompt-grimoire-v12';
 const ASSETS = [
   './',
   './index.html',
