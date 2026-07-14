@@ -165,4 +165,33 @@
       textarea.dispatchEvent(new Event('input', { bubbles: true }));
     });
   }
+
+  const codeBlockButton = document.getElementById('codeBlockBtn');
+  if (codeBlockButton) {
+    codeBlockButton.addEventListener('click', () => {
+      const textarea = document.getElementById('content');
+      if (!textarea) return;
+
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const selected = textarea.value.slice(start, end);
+      const beforeText = textarea.value.slice(0, start);
+      const afterText = textarea.value.slice(end);
+      const prefix = beforeText && !beforeText.endsWith('\n\n')
+        ? (beforeText.endsWith('\n') ? '\n' : '\n\n')
+        : '';
+      const suffix = afterText && !afterText.startsWith('\n\n')
+        ? (afterText.startsWith('\n') ? '\n' : '\n\n')
+        : '';
+      const content = selected || 'SYSTEM-MOTOR: ';
+      const insertion = `${prefix}\`\`\`\n${content}\n\`\`\`${suffix}`;
+      const contentStart = start + prefix.length + 4;
+      const contentEnd = contentStart + content.length;
+
+      textarea.setRangeText(insertion, start, end, 'end');
+      textarea.focus();
+      textarea.setSelectionRange(contentStart, contentEnd);
+      textarea.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+  }
 })();
